@@ -1,164 +1,119 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1abfjov" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.11.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1abfjov" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.11.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
   <bpmn:process id="Company_email_application" isExecutable="true">
     <bpmn:startEvent id="Event_0q4ck1z" name="Someone posts a question on the forum">
       <bpmn:outgoing>Flow_11d0xfg</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0u9r4z4" messageRef="Message_0wxk519" />
     </bpmn:startEvent>
-    <bpmn:sendTask id="Activity_0hvcp96" name="Inform about a new company mail" camunda:class="com.example.workflow.LoggerDelegate">
-      <bpmn:incoming>Flow_11d0xfg</bpmn:incoming>
-      <bpmn:outgoing>Flow_1io9okl</bpmn:outgoing>
-    </bpmn:sendTask>
-    <bpmn:eventBasedGateway id="Gateway_18d8g5c">
-      <bpmn:incoming>Flow_1io9okl</bpmn:incoming>
-      <bpmn:outgoing>Flow_1j8sryn</bpmn:outgoing>
-      <bpmn:outgoing>Flow_0d7bbm2</bpmn:outgoing>
-    </bpmn:eventBasedGateway>
-    <bpmn:intermediateCatchEvent id="Event_0e1nhnm" name="Company is in not database">
-      <bpmn:incoming>Flow_1j8sryn</bpmn:incoming>
-      <bpmn:outgoing>Flow_0urryk0</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_002jrlh" messageRef="Message_0ud757v" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:intermediateCatchEvent id="Event_1hsmlla" name="Company is in database">
-      <bpmn:incoming>Flow_0d7bbm2</bpmn:incoming>
-      <bpmn:outgoing>Flow_19cmun9</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_1mliul2" messageRef="Message_0belo2f" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:endEvent id="Event_0wuu3oz" name="Ask T-Dog for help">
-      <bpmn:incoming>Flow_19cmun9</bpmn:incoming>
+    <bpmn:endEvent id="Event_0wuu3oz" name="Send verification mail">
+      <bpmn:incoming>Flow_11fkv8c</bpmn:incoming>
       <bpmn:messageEventDefinition id="MessageEventDefinition_04kk433" messageRef="Message_08e4w20" camunda:class="com.example.workflow.AskTDogForHelp" />
     </bpmn:endEvent>
     <bpmn:userTask id="Activity_17jg58n" name="Look if company can get access">
-      <bpmn:incoming>Flow_0urryk0</bpmn:incoming>
+      <bpmn:incoming>Flow_03cxfdf</bpmn:incoming>
       <bpmn:outgoing>Flow_14yiskf</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:endEvent id="Event_1syrqme" name="Process ended">
       <bpmn:incoming>Flow_14yiskf</bpmn:incoming>
       <bpmn:terminateEventDefinition id="TerminateEventDefinition_01fvarn" />
     </bpmn:endEvent>
-    <bpmn:subProcess id="Activity_10077ah" triggeredByEvent="true">
-      <bpmn:startEvent id="Event_07elhux" name="Important work">
-        <bpmn:outgoing>Flow_06y18nn</bpmn:outgoing>
-        <bpmn:signalEventDefinition id="SignalEventDefinition_1opjry7" signalRef="Signal_10jmo21" />
-      </bpmn:startEvent>
-      <bpmn:userTask id="Activity_0tfswrf" name="Play Ping Pong">
-        <bpmn:incoming>Flow_06y18nn</bpmn:incoming>
-        <bpmn:outgoing>Flow_08505zg</bpmn:outgoing>
-      </bpmn:userTask>
-      <bpmn:endEvent id="Event_065id8t">
-        <bpmn:incoming>Flow_08505zg</bpmn:incoming>
-      </bpmn:endEvent>
-      <bpmn:sequenceFlow id="Flow_08505zg" sourceRef="Activity_0tfswrf" targetRef="Event_065id8t" />
-      <bpmn:sequenceFlow id="Flow_06y18nn" sourceRef="Event_07elhux" targetRef="Activity_0tfswrf" />
-    </bpmn:subProcess>
     <bpmn:sequenceFlow id="Flow_11d0xfg" sourceRef="Event_0q4ck1z" targetRef="Activity_0hvcp96" />
     <bpmn:sequenceFlow id="Flow_1io9okl" sourceRef="Activity_0hvcp96" targetRef="Gateway_18d8g5c" />
-    <bpmn:sequenceFlow id="Flow_1j8sryn" sourceRef="Gateway_18d8g5c" targetRef="Event_0e1nhnm" />
-    <bpmn:sequenceFlow id="Flow_0d7bbm2" sourceRef="Gateway_18d8g5c" targetRef="Event_1hsmlla" />
-    <bpmn:sequenceFlow id="Flow_0urryk0" sourceRef="Event_0e1nhnm" targetRef="Activity_17jg58n" />
-    <bpmn:sequenceFlow id="Flow_19cmun9" sourceRef="Event_1hsmlla" targetRef="Event_0wuu3oz" />
     <bpmn:sequenceFlow id="Flow_14yiskf" sourceRef="Activity_17jg58n" targetRef="Event_1syrqme" />
+    <bpmn:sequenceFlow id="Flow_11fkv8c" sourceRef="logging" targetRef="Event_0wuu3oz" />
+    <bpmn:exclusiveGateway id="Gateway_18d8g5c" name="Is Company mail in database?">
+      <bpmn:incoming>Flow_1io9okl</bpmn:incoming>
+      <bpmn:outgoing>Flow_16tvpaq</bpmn:outgoing>
+      <bpmn:outgoing>Flow_03cxfdf</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_16tvpaq" name="Yes" sourceRef="Gateway_18d8g5c" targetRef="logging">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{MailExists}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_03cxfdf" name="No" sourceRef="Gateway_18d8g5c" targetRef="Activity_17jg58n">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">#{not MailExists}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="logging" name="Company is in database" camunda:class="com.example.workflow.LoggerDelegate">
+      <bpmn:incoming>Flow_16tvpaq</bpmn:incoming>
+      <bpmn:outgoing>Flow_11fkv8c</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_0hvcp96" name="Check mail in system" camunda:class="com.example.workflow.CheckMail">
+      <bpmn:incoming>Flow_11d0xfg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1io9okl</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmn:message id="Message_0hq4juk" />
   <bpmn:message id="Message_0l96pbp" />
   <bpmn:message id="Message_0belo2f" name="DoesExistInDB" />
-  <bpmn:message id="Message_08e4w20" name="AskTDog" />
+  <bpmn:message id="Message_08e4w20" name="SendVerificationMail" />
   <bpmn:message id="Message_0pqpmih" name="QuestionEdited" />
   <bpmn:signal id="Signal_10jmo21" name="ImportantWork" />
-  <bpmn:message id="Message_0wxk519" name="MailConfermationRequested" />
+  <bpmn:message id="Message_0wxk519" name="MailConfirmationRequested" />
   <bpmn:message id="Message_0ud757v" name="DoesNotExist" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Company_email_application">
       <bpmndi:BPMNEdge id="Flow_14yiskf_di" bpmnElement="Flow_14yiskf">
-        <di:waypoint x="780" y="120" />
-        <di:waypoint x="842" y="120" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_19cmun9_di" bpmnElement="Flow_19cmun9">
-        <di:waypoint x="608" y="230" />
-        <di:waypoint x="731" y="230" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0urryk0_di" bpmnElement="Flow_0urryk0">
-        <di:waypoint x="618" y="120" />
-        <di:waypoint x="680" y="120" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0d7bbm2_di" bpmnElement="Flow_0d7bbm2">
-        <di:waypoint x="490" y="145" />
-        <di:waypoint x="490" y="230" />
-        <di:waypoint x="572" y="230" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1j8sryn_di" bpmnElement="Flow_1j8sryn">
-        <di:waypoint x="515" y="120" />
-        <di:waypoint x="582" y="120" />
+        <di:waypoint x="730" y="120" />
+        <di:waypoint x="812" y="120" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1io9okl_di" bpmnElement="Flow_1io9okl">
-        <di:waypoint x="390" y="120" />
-        <di:waypoint x="465" y="120" />
+        <di:waypoint x="360" y="120" />
+        <di:waypoint x="434" y="120" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_11d0xfg_di" bpmnElement="Flow_11d0xfg">
-        <di:waypoint x="248" y="120" />
-        <di:waypoint x="290" y="120" />
+        <di:waypoint x="218" y="120" />
+        <di:waypoint x="260" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11fkv8c_di" bpmnElement="Flow_11fkv8c">
+        <di:waypoint x="729" y="230" />
+        <di:waypoint x="792" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16tvpaq_di" bpmnElement="Flow_16tvpaq">
+        <di:waypoint x="459" y="145" />
+        <di:waypoint x="459" y="230" />
+        <di:waypoint x="629" y="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="520" y="213" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03cxfdf_di" bpmnElement="Flow_03cxfdf">
+        <di:waypoint x="484" y="120" />
+        <di:waypoint x="630" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="550" y="102" width="15" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0q4ck1z_di" bpmnElement="Event_0q4ck1z">
-        <dc:Bounds x="212" y="102" width="36" height="36" />
+        <dc:Bounds x="182" y="102" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="187" y="145" width="86" height="40" />
+          <dc:Bounds x="157" y="145" width="86" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0hvcp96_di" bpmnElement="Activity_0hvcp96">
-        <dc:Bounds x="290" y="80" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_18d8g5c_di" bpmnElement="Gateway_18d8g5c">
-        <dc:Bounds x="465" y="95" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_0e1nhnm_di" bpmnElement="Event_0e1nhnm">
-        <dc:Bounds x="582" y="102" width="36" height="36" />
+      <bpmndi:BPMNShape id="Event_1syrqme_di" bpmnElement="Event_1syrqme">
+        <dc:Bounds x="812" y="102" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="557" y="145" width="89" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1hsmlla_di" bpmnElement="Event_1hsmlla">
-        <dc:Bounds x="572" y="212" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="555" y="255" width="70" height="27" />
+          <dc:Bounds x="793" y="145" width="74" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0wuu3oz_di" bpmnElement="Event_0wuu3oz">
-        <dc:Bounds x="731" y="212" width="36" height="36" />
+        <dc:Bounds x="792" y="212" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="715" y="255" width="68" height="27" />
+          <dc:Bounds x="770" y="255" width="82" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_17jg58n_di" bpmnElement="Activity_17jg58n">
-        <dc:Bounds x="680" y="80" width="100" height="80" />
+        <dc:Bounds x="630" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1syrqme_di" bpmnElement="Event_1syrqme">
-        <dc:Bounds x="842" y="102" width="36" height="36" />
+      <bpmndi:BPMNShape id="Gateway_1khgxef_di" bpmnElement="Gateway_18d8g5c" isMarkerVisible="true">
+        <dc:Bounds x="434" y="95" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="823" y="145" width="74" height="14" />
+          <dc:Bounds x="418" y="65" width="83" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_10077ah_di" bpmnElement="Activity_10077ah" isExpanded="true">
-        <dc:Bounds x="165" y="280" width="350" height="200" />
+      <bpmndi:BPMNShape id="Activity_1tll3en_di" bpmnElement="Activity_0hvcp96">
+        <dc:Bounds x="260" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_06y18nn_di" bpmnElement="Flow_06y18nn">
-        <di:waypoint x="228" y="380" />
-        <di:waypoint x="280" y="380" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_08505zg_di" bpmnElement="Flow_08505zg">
-        <di:waypoint x="380" y="380" />
-        <di:waypoint x="432" y="380" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Event_07elhux_di" bpmnElement="Event_07elhux">
-        <dc:Bounds x="192" y="362" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="173" y="405" width="74" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0tfswrf_di" bpmnElement="Activity_0tfswrf">
-        <dc:Bounds x="280" y="340" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_065id8t_di" bpmnElement="Event_065id8t">
-        <dc:Bounds x="432" y="362" width="36" height="36" />
+      <bpmndi:BPMNShape id="Activity_07uut79_di" bpmnElement="logging">
+        <dc:Bounds x="629" y="190" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
