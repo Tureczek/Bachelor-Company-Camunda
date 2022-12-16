@@ -1,2 +1,3 @@
 # Project exclude paths
 /bpmCommunication/target/
+/bpmCommunication/src/main/resources/application.yaml
