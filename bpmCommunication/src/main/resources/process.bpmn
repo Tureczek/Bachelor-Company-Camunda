@@ -5,10 +5,6 @@
       <bpmn:outgoing>Flow_11d0xfg</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_0u9r4z4" messageRef="Message_0wxk519" />
     </bpmn:startEvent>
-    <bpmn:endEvent id="Event_0wuu3oz" name="Send verification mail">
-      <bpmn:incoming>Flow_11fkv8c</bpmn:incoming>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_04kk433" messageRef="Message_08e4w20" camunda:class="com.example.workflow.AskTDogForHelp" />
-    </bpmn:endEvent>
     <bpmn:userTask id="Activity_17jg58n" name="Look if company can get access">
       <bpmn:incoming>Flow_03cxfdf</bpmn:incoming>
       <bpmn:outgoing>Flow_14yiskf</bpmn:outgoing>
@@ -40,6 +36,10 @@
       <bpmn:incoming>Flow_11d0xfg</bpmn:incoming>
       <bpmn:outgoing>Flow_1io9okl</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_0wuu3oz" name="Send verification mail">
+      <bpmn:incoming>Flow_11fkv8c</bpmn:incoming>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_04kk433" messageRef="Message_08e4w20" camunda:class="com.example.workflow.ExtendedFlow" />
+    </bpmn:endEvent>
   </bpmn:process>
   <bpmn:message id="Message_0hq4juk" />
   <bpmn:message id="Message_0l96pbp" />
