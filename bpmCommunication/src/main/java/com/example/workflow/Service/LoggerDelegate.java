@@ -1,9 +1,8 @@
-package com.example.workflow;
+package com.example.workflow.Service;
 
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.camunda.bpm.engine.runtime.Execution;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.inject.Named;
